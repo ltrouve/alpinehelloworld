@@ -18,10 +18,22 @@ pipeline {
              agent any
              steps {
                 script {
-                  sh 'echo "toto"'
+                  sh 'docker build -t ${ID_DOCKER}/$IMAGE_NAME:$IMAGE_TAG .'
                 }
              }
         }
-
-
+        stage('Run container based on builded image') {
+            agent any
+            steps {
+               script {
+                 sh '''
+                    echo "Clean Environment"
+                    docker rm -f $IMAGE_NAME || echo "container does not exist"
+                    docker run --name $IMAGE_NAME -d -p ${PORT_EXPOSED}:${INTERNAL_PORT} -e PORT=${INTERNAL_PORT} ${ID_DOCKER}/$IMAGE_NAME:$IMAGE_TAG
+                    sleep 10
+                 '''
+               }
+            }
+       }
+     }
 }

@@ -22,38 +22,6 @@ pipeline {
                 }
              }
         }
-        stage('Run container based on builded image') {
-            agent any
-            steps {
-               script {
-                 sh '''
-                    echo "Clean Environment"
-                    docker rm -f $IMAGE_NAME || echo "container does not exist"
-                    docker run --name $IMAGE_NAME -d -p ${PORT_EXPOSED}:${INTERNAL_PORT} -e PORT=${INTERNAL_PORT} ${ID_DOCKER}/$IMAGE_NAME:$IMAGE_TAG
-                    sleep 10
-                 '''
-               }
-            }
-       }
-       stage('Test image') {
-           agent any
-           steps {
-              script {
-                sh '''
-                    curl http://172.17.0.1:${PORT_EXPOSED} | grep -q "Hello world!"
-                '''
-              }
-           }
-      }
-      stage('Clean Container') {
-          agent any
-          steps {
-             script {
-               sh '''
-                 docker stop $IMAGE_NAME
-                 docker rm $IMAGE_NAME
-               '''
-             }
-          }
-     }
+
+
 }

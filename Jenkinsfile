@@ -12,7 +12,8 @@ pipeline {
        STG_API_ENDPOINT = "http://54.172.98.33:1993/"
        STG_APP_ENDPOINT = "http://54.172.98.33:80/"
        PROD_API_ENDPOINT = "http://54.226.195.48:1993/"
-       PROD_APP_ENDPOINT = "http://54.226.195.48:80/"       INTERNAL_PORT = "5000"
+       PROD_APP_ENDPOINT = "http://54.226.195.48:80/"
+       INTERNAL_PORT = "5000"
        EXTERNAL_PORT = "${PORT_EXPOSED}"
        CONTAINER_IMAGE = "${ID_DOCKER}/${IMAGE_NAME}:${IMAGE_TAG}"
 
